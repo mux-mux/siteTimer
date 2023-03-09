@@ -38,14 +38,14 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   //Timer
-  const deadline = '2023-03-12';
+  const deadline = '2023-03-10';
 
-  function getTimeRemaining(endtime) {
-    const t = Date.parse(deadline) - Date.parse(new Date()),
-      days = Math.floor(t / (1000 * 60 * 60 * 24)),
+  function getTimeReamaining(endtime) {
+    const t = Date.parse(endtime) - Date.parse(new Date()),
+      days = Math.floor((t / (1000 * 60 * 60 * 24))),
       hours = Math.floor((t / (1000 * 60 * 60) % 24)),
-      minutes = Math.floor((t / 1000 / 60) % 60),
-      seconds = Math.floor((t / 1000) % 60);
+      minutes = Math.floor((t / (1000 * 60) % 60)),
+      seconds = Math.floor((t / 1000 % 60));
 
     return {
       'total': t,
@@ -70,20 +70,18 @@ window.addEventListener('DOMContentLoaded', () => {
       hours = timer.querySelector('#hours'),
       minutes = timer.querySelector('#minutes'),
       seconds = timer.querySelector('#seconds'),
-      timeInterval = setInterval(updateClock, 1000);
+      interval = setInterval(updateClock, 1000);
 
     updateClock();
 
     function updateClock() {
-      const t = getTimeRemaining(endtime);
-
+      const t = getTimeReamaining(endtime);
       days.innerHTML = getZero(t.days);
       hours.innerHTML = getZero(t.hours);
       minutes.innerHTML = getZero(t.minutes);
       seconds.innerHTML = getZero(t.seconds);
-
-      if (t.total <= 0) {
-        clearInterval(timeInterval);
+      if (t.total < 0) {
+        clearInterval(interval);
       }
     }
   }
